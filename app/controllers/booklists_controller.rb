@@ -5,8 +5,36 @@ class BooklistsController < ApplicationController
   # GET /booklists.json
   def index
     @booklists = Booklist.all
+    #@focusbooklists=Focusbooklist.joins(:user)
+    @currentuser = current_user
+    @q = Booklist.ransack(params[:q])
+    #@searchbooklist = @q.result(distinct: true)
   end
 
+  def postbook
+    @oneinbooklists = Focusbooklist.create(user_id: params[:userid], booklist_id: params[:booklistid])
+    #@oneinbooklists.focus=true
+    @oneinbooklists.save
+    #render js: "alert('Hello Rails');"
+
+    respond_to do |format|
+      if(@oneinbooklists.save)
+        format.html do
+          redirect_to '/'
+        end
+        #format.html { redirect_to @oneinbooklists, notice: 'Product was successfully created.' }
+        #format.json { render :show, status: :created, location: @oneinbooklists }
+        format.js {render 'postbook.js.erb'}
+      else
+        format.html do
+          redirect_to '/'
+        end
+        #format.html { render :new }
+        format.json { render json: @oneinbooklists.errors, status: :unprocessable_entity }
+        #format.js {render postbook}
+      end
+    end
+  end
   # GET /booklists/1
   # GET /booklists/1.json
   def show

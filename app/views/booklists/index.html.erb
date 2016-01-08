@@ -1,33 +1,53 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Booklists</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Title</th>
-      <th>Bl type</th>
-      <th>Intro</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @booklists.each do |booklist| %>
-      <tr>
-        <td><%= booklist.user_id %></td>
-        <td><%= booklist.title %></td>
-        <td><%= booklist.bl_type %></td>
-        <td><%= booklist.intro %></td>
-        <td><%= link_to 'Show', booklist %></td>
-        <td><%= link_to 'Edit', edit_booklist_path(booklist) %></td>
-        <td><%= link_to 'Destroy', booklist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<% content_for :search do %>
+    <%= search_form_for @q, url: booklistsearch_index_path, html: { class: "navbar-form navbar-right" } do |f| %>
+      <div class="form-group">
+        <%= f.search_field :title_cont, class: "form-control", placeholder: "输入书单名称" %>
+        <%= f.submit :class => 'btn btn-xs btn-primary' %>
+      </div>
     <% end %>
-  </tbody>
-</table>
+<% end %>
 
-<br>
+<div class="row-fluid">
+    <div class="col-lg-2">
+        <ul class="nav nav-pills nav-stacked" id="booktypenav">
+            <li class="active"><a href="#">Home</a></li>
+            <li class="style1"><%= link_to "玄幻奇幻", "/path1"  %></li>
+            <li class="style1"><%= link_to "现代都市", "/path1"  %></li>
+            <li class="style1"><%= link_to "历史军事", "/path1"  %></li>
+            <li class="style1"><%= link_to "游戏竞技", "/path1"  %></li>
+            <li class="style1"><%= link_to "科幻灵异", "/path1"  %></li>
+            <li class="style1"><%= link_to "同人短篇", "/path1"  %></li>
+            <li class="style1"><%= link_to "文学名著", "/path1"  %></li>
+        </ul>
+    </div>
 
-<%= link_to 'New Booklist', new_booklist_path %>
+    <div class="col-lg-10">
+        <div class="panel panel-primary">
+           <div class="panel-heading">
+              <h3 class="panel-title">热门书单</h3>
+           </div>
+           <div class="panel-body">
+                <table class="table">
+                    <th>书单标题</th><th>书单类型</th><th>书单简介</th>
+                    <% @booklists.each do |booklist| %>
+                        <tr>
+                            <td><%= booklist.title %></td>
+                            <td><%= booklist.bltype %></td>
+                            <td><%= booklist.intro %></td>
+                            <td><% if user_signed_in? %>
+                                    <%if Focusbooklist.exists?(user_id: @currentuser.id, booklist_id: booklist.id) %>
+                                        <%= button_to "已关注",  { action: "postbook", booklistid: booklist.id, userid: @currentuser.id }, :id => booklist.id.to_s, :class => 'btn btn-xs btn-primary', remote: true, form: { "data-type" => "javascript" }, :data => { :disable_with => '数据更新中', disabled: true } %>
+                                    <% else %>
+                                        <%= button_to "未关注",  { action: "postbook", booklistid: booklist.id, userid: @currentuser.id }, :id => booklist.id.to_s, :class => 'btn btn-xs btn-primary', remote: true, form: { "data-type" => "javascript" }, :data => { :disable_with => '数据更新中' } %>
+                                    <% end %>
+                                <% end %>
+                            </td>
+                        </tr>
+                    <% end %>
+                </table>
+           </div>
+        </div>
+    </div>
+</div>
+
+
