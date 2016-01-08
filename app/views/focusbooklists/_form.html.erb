@@ -1,0 +1,25 @@
+<%= form_for(@focusbooklist) do |f| %>
+  <% if @focusbooklist.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@focusbooklist.errors.count, "error") %> prohibited this focusbooklist from being saved:</h2>
+
+      <ul>
+      <% @focusbooklist.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.number_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :booklist_id %><br>
+    <%= f.number_field :booklist_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

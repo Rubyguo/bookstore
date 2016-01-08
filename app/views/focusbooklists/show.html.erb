@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @focusbooklist.user_id %>
+</p>
+
+<p>
+  <strong>Booklist:</strong>
+  <%= @focusbooklist.booklist_id %>
+</p>
+
+<%= link_to 'Edit', edit_focusbooklist_path(@focusbooklist) %> |
+<%= link_to 'Back', focusbooklists_path %>
