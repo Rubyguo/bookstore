@@ -2,7 +2,7 @@
     <%= search_form_for @q, url: booklistsearch_index_path, html: { class: "navbar-form navbar-right" } do |f| %>
       <div class="form-group">
         <%= f.search_field :title_cont, class: "form-control", placeholder: "输入书单名称" %>
-        <%= f.submit :class => 'btn btn-xs btn-primary' %>
+        <%= f.submit :class => 'btn btn-sm btn-primary' %>
       </div>
     <% end %>
 <% end %>

@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>书籍列表</h1>
+<h1>书单列表</h1>
 
 <% @booksinthelist.each do |bookinlist| %>
   <div class="panel panel-primary" style="background-color: #dedef8; box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
@@ -9,18 +9,23 @@
     </div>
     <div class="row">
       <div class="col-md-2">
-        <img src="cinqueterre.jpg" class="img-responsive" alt="Cinque Terre" width=200 height=200>
+        <% if bookinlist.cover_path!=nil %>
+          <img src=<% bookinlist.cover_path %> class="img-responsive" alt="Cinque Terre" width=200 height=200>
+        <% else %>
+          <img src="cinqueterre.jpg" class="img-responsive" alt="Cinque Terre" width=200 height=200>
+        <% end %>
       </div>
       <div class="col-md-3">
-        <p class="text-info"><%= bookinlist.book_name %></p>
+        <h3 class="text-success"><%= link_to bookinlist.book_name, bookinlist.source %></h3>
         <p class="text-primary">书籍类型：<%= bookinlist.book_type %></p>
-        <p class="text-success">作者：<%= bookinlist.author %></p>
+        <p class="text-info">作者：<%= bookinlist.author %></p>
         <p class="text-warning">字数：<%= bookinlist.words_num.to_s %></p>
         <p class="text-danger">最后更新时间：<%= bookinlist.updated_at.to_s %></p>
         
       </div>
       <div class="col-md-6">
-        <p>书籍介绍：<%= bookinlist.bookintro %></p>
+        <h3 class="text-info">书籍介绍：</h3>
+        <p><%= bookinlist.bookintro %></p>
       </div>
     </div>
   </div>
