@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get 'booklistsearch/index'
-
+  post 'booklists/postbook'
   devise_for :users
   resources :comments
   resources :books

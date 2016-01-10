@@ -4,7 +4,7 @@ class BooklistsController < ApplicationController
   # GET /booklists
   # GET /booklists.json
   def index
-    @booklists = Booklist.all
+    @booklists = Booklist.limit(10)
     #@focusbooklists=Focusbooklist.joins(:user)
     @currentuser = current_user
     @q = Booklist.ransack(params[:q])
@@ -14,7 +14,7 @@ class BooklistsController < ApplicationController
   def postbook
     @oneinbooklists = Focusbooklist.create(user_id: params[:userid], booklist_id: params[:booklistid])
     #@oneinbooklists.focus=true
-    @oneinbooklists.save
+    #@oneinbooklists.save
     #render js: "alert('Hello Rails');"
 
     respond_to do |format|

@@ -5,6 +5,8 @@ class BooksinlistsController < ApplicationController
   # GET /booksinlists.json
   def index
     @booksinlists = Booksinlist.all
+    @booksinthelist = Book.joins(:booksinlists).where(booksinlists: {booklist_id: params[:id]})
+    #@books = Book.find()
   end
 
   # GET /booksinlists/1

@@ -1,29 +1,28 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Booksinlists</h1>
+<h1>书籍列表</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Booklist</th>
-      <th>Book</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<% @booksinthelist.each do |bookinlist| %>
+  <div class="panel panel-primary" style="background-color: #dedef8; box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
+    <div class="panel-heading">
+      <h3 class="panel-title">书籍列表</h3>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <img src="cinqueterre.jpg" class="img-responsive" alt="Cinque Terre" width=200 height=200>
+      </div>
+      <div class="col-md-3">
+        <p class="text-info"><%= bookinlist.book_name %></p>
+        <p class="text-primary">书籍类型：<%= bookinlist.book_type %></p>
+        <p class="text-success">作者：<%= bookinlist.author %></p>
+        <p class="text-warning">字数：<%= bookinlist.words_num.to_s %></p>
+        <p class="text-danger">最后更新时间：<%= bookinlist.updated_at.to_s %></p>
+        
+      </div>
+      <div class="col-md-6">
+        <p>书籍介绍：<%= bookinlist.bookintro %></p>
+      </div>
+    </div>
+  </div>
+<% end %>
 
-  <tbody>
-    <% @booksinlists.each do |booksinlist| %>
-      <tr>
-        <td><%= booksinlist.booklist_id %></td>
-        <td><%= booksinlist.book_id %></td>
-        <td><%= link_to 'Show', booksinlist %></td>
-        <td><%= link_to 'Edit', edit_booksinlist_path(booksinlist) %></td>
-        <td><%= link_to 'Destroy', booksinlist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Booksinlist', new_booksinlist_path %>
